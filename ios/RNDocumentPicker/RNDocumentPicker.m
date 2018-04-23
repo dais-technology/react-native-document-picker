@@ -71,7 +71,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)options
     documentPicker.modalPresentationStyle = UIModalPresentationFormSheet;
 
     UIViewController *rootViewController = [[[[UIApplication sharedApplication]delegate] window] rootViewController];
-    
+
     while (rootViewController.modalViewController) {
         rootViewController = rootViewController.modalViewController;
     }
@@ -113,5 +113,13 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)options
         [url stopAccessingSecurityScopedResource];
     }
 }
+
+- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {
+    RCTResponseSenderBlock callback = [composeCallbacks lastObject];
+    NSMutableDictionary* result = [NSMutableDictionary dictionary];
+    callback(@[[NSNull null], result]);
+}
+
+
 
 @end
